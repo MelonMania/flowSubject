@@ -12,6 +12,6 @@ struct AlbumInfo {
     var title : String
     var count: Int
     
-    var thumnail : PHAsset
-    var images : PHFetchResult<PHAsset>
+    var thumnail : PHAsset?
+    var images : PHFetchResult<PHAsset>?
 }

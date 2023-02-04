@@ -48,28 +48,26 @@ struct AlbumDataManager {
     
     func requestAlbums(viewController : AlbumViewController) {
         
-        let cameraRoll: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil)
-        
+        let cameraRoll: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .any, options: PHFetchOptions())
+ 
         for i in 0 ..< cameraRoll.count {
-            var album : AlbumInfo?
-            
+        
             let fetchOption = PHFetchOptions()
             fetchOption.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             
             let fetchResult = PHAsset.fetchAssets(in: cameraRoll[i], options: fetchOption)
             
-            album?.title = cameraRoll[0].localizedTitle!
-            album?.count = fetchResult.count
-            album?.thumnail = fetchResult.firstObject!
-            album?.images = fetchResult
-            
-            if let value = album {
-                viewController.albums.append(value)
-            }
+            let album = AlbumInfo(title: cameraRoll[i].localizedTitle ?? "무제", count: fetchResult.count, thumnail: fetchResult.firstObject, images: fetchResult)
+
+            viewController.albums.append(album)
             
         }
         
-        viewController.albumTableView.reloadData()
+        
+        DispatchQueue.main.async {
+            viewController.albumTableView.reloadData()
+        }
+        
     }
     
 }

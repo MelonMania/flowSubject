@@ -63,6 +63,16 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = PhotoListViewController()
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        
+        vc.album = albums[indexPath.row]
+        backBarButtonItem.tintColor = .black
+
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        self.navigationController?.pushViewController(vc, animated: false)
+    }
     
     func setTableView() {
         albumTableView.delegate = self

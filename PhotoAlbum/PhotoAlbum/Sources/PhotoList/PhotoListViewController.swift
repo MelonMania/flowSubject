@@ -81,6 +81,20 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
              return 4
      }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let asset = self.album?.images?.object(at: indexPath.row) {
+            let resources = PHAssetResource.assetResources(for: asset)
+            let filename = resources.first!.originalFilename
+            
+            let alert = UIAlertController(title: "사진정보", message: "파일명 : \(filename)\n파일크기 : ", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+            
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
+                
+    }
+    
     func setCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self

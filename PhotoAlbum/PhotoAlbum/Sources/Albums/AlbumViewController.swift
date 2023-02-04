@@ -23,7 +23,7 @@ class AlbumViewController: UIViewController {
         setNavigationBar()
         setTableView()
         
-        //albumManager.requestPhotosPermission(viewController: self)
+        albumManager.requestPhotosPermission(viewController: self)
     }
 
     // 네비게이션 바 세팅
@@ -44,11 +44,15 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumsTableViewCell") as? AlbumsTableViewCell else { return UITableViewCell() }
         
-        
-        imageManager.requestImage(for: albums[indexPath.row].thumnail, targetSize: CGSize(width: 70, height: 70), contentMode: .aspectFill, options: nil) {
-            image, _ in
-            cell.thumbnailImageView.image = image
+        if let thumbnail = albums[indexPath.row].thumnail {
+            imageManager.requestImage(for: thumbnail, targetSize: CGSize(width: 70, height: 70), contentMode: .aspectFill, options: nil) {
+                image, _ in
+                cell.thumbnailImageView.image = image
+            }
+        } else {
+            cell.thumbnailImageView.image = UIImage()
         }
+        
         
         cell.albumTitleLabel.text = albums[indexPath.row].title
         cell.photoCountLabel.text = String(albums[indexPath.row].count)

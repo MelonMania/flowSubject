@@ -9,7 +9,6 @@ import Foundation
 import Photos
 
 
-
 struct AlbumDataManager {
     
     func requestPhotosPermission(viewController : AlbumViewController) {

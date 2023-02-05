@@ -27,7 +27,7 @@ class AlbumViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.albumDataManager.requestPhotosPermission(delegate: self)
+        self.albumDataManager.checkPhotosPermission(delegate: self)
     }
     
     // 네비게이션 바 세팅
@@ -79,6 +79,10 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
 
         self.navigationItem.backBarButtonItem = backBarButtonItem
         self.navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 85
     }
     
     func setTableView() {

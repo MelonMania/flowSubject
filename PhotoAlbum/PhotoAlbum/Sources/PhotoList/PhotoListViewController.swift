@@ -46,7 +46,10 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoListCollectionViewCell", for: indexPath) as! PhotoListCollectionViewCell // 이거 guard로 수정 생각
         
         if let photo = album?.images?[indexPath.row] {
-            imageManager.requestImage(for: photo, targetSize: CGSize(width: 70, height: 70), contentMode: .aspectFill, options: nil) {
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .opportunistic // 이미지 화질 개선
+            
+            imageManager.requestImage(for: photo, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) {
                 image, _ in
                 cell.photoImageView.image = image
             }

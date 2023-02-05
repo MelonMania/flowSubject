@@ -66,7 +66,7 @@
                 <outlet property="photoCountLabel" destination="o3f-bh-IQs" id="mWa-gw-YlV"/>
                 <outlet property="thumbnailImageView" destination="zmu-bQ-BL0" id="FZX-5n-dfu"/>
             </connections>
-            <point key="canvasLocation" x="130.53435114503816" y="-11.619718309859156"/>
+            <point key="canvasLocation" x="131" y="-11"/>
         </tableViewCell>
     </objects>
 </document>

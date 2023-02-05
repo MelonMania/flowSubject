@@ -81,6 +81,10 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 85
+    }
+    
     func setTableView() {
         albumTableView.delegate = self
         albumTableView.dataSource = self

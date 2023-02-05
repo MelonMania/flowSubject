@@ -9,15 +9,15 @@ import Foundation
 import Photos
 
 
-struct AlbumDataManager {
+class AlbumDataManager : AlbumDataManagerDelegate {
     
-    func requestPhotosPermission(viewController : AlbumViewController) {
-        let photoAuthorizationStatusStatus = PHPhotoLibrary.authorizationStatus()
+    func requestPhotosPermission(delegate : AlbumViewDelegate) {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         
-        switch photoAuthorizationStatusStatus {
+        switch photoAuthorizationStatus {
         case .authorized:
             print("Photo Authorization status is authorized.")
-            self.requestAlbums(viewController: viewController)
+            self.requestAlbums(delegate : delegate)
             
         case .denied:
             print("Photo Authorization status is denied.")
@@ -29,7 +29,7 @@ struct AlbumDataManager {
                 switch status {
                 case .authorized:
                     print("User permiited.")
-                    self.requestAlbums(viewController: viewController)
+                    self.requestAlbums(delegate : delegate)
                 case .denied:
                     print("User denied.")
                     break
@@ -45,7 +45,9 @@ struct AlbumDataManager {
         }
     }
     
-    func requestAlbums(viewController : AlbumViewController) {
+    func requestAlbums(delegate : AlbumViewDelegate) {
+        
+        var albums : [AlbumInfo] = []
         
         let cameraRoll: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .any, options: PHFetchOptions())
  
@@ -58,15 +60,10 @@ struct AlbumDataManager {
             
             let album = AlbumInfo(title: cameraRoll[i].localizedTitle ?? "무제", count: fetchResult.count, thumnail: fetchResult.firstObject, images: fetchResult)
 
-            viewController.albums.append(album)
-            
+            albums.append(album)
         }
         
-        
-        DispatchQueue.main.async {
-            viewController.albumTableView.reloadData()
-        }
-        
+        delegate.getAlbum(albums: albums)
     }
     
 }

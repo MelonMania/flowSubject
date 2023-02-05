@@ -10,7 +10,7 @@ import Photos
 
 class AlbumViewController: UIViewController {
 
-    var albumManager = AlbumDataManager()
+    lazy var albumDataManager : AlbumDataManagerDelegate = AlbumDataManager()
     let imageManager : PHCachingImageManager = PHCachingImageManager()
     
     var albums : [AlbumInfo] = []
@@ -22,10 +22,14 @@ class AlbumViewController: UIViewController {
         
         setNavigationBar()
         setTableView()
-        
-        albumManager.requestPhotosPermission(viewController: self)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.albumDataManager.requestPhotosPermission(delegate: self)
+    }
+    
     // 네비게이션 바 세팅
     func setNavigationBar() {
         self.navigationItem.title = "앨범"
@@ -86,4 +90,15 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
         albumTableView.register(albumCell, forCellReuseIdentifier: "AlbumsTableViewCell")
     }
     
+}
+
+//MARK: - AlbumViewDelegate
+extension AlbumViewController : AlbumViewDelegate {
+    func getAlbum(albums : [AlbumInfo]) {
+        self.albums = albums
+        
+        DispatchQueue.main.async {
+            self.albumTableView.reloadData()
+        }
+    }
 }

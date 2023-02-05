@@ -45,7 +45,10 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumsTableViewCell") as? AlbumsTableViewCell else { return UITableViewCell() }
         
         if let thumbnail = albums[indexPath.row].thumnail {
-            imageManager.requestImage(for: thumbnail, targetSize: CGSize(width: 70, height: 70), contentMode: .aspectFill, options: nil) {
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .opportunistic // 이미지 화질 개선
+            
+            imageManager.requestImage(for: thumbnail, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) {
                 image, _ in
                 cell.thumbnailImageView.image = image
             }

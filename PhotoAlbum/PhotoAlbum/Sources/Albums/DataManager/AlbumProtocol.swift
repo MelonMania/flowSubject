@@ -12,5 +12,5 @@ protocol AlbumViewDelegate {
 }
 
 protocol AlbumDataManagerDelegate {
-    func requestPhotosPermission(delegate : AlbumViewDelegate)
+    func checkPhotosPermission(delegate : AlbumViewDelegate)
 }

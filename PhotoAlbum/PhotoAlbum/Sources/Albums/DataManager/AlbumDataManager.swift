@@ -11,27 +11,27 @@ import Photos
 
 class AlbumDataManager : AlbumDataManagerDelegate {
     
-    func requestPhotosPermission(delegate : AlbumViewDelegate) {
+    func checkPhotosPermission(delegate : AlbumViewDelegate) {
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         
         switch photoAuthorizationStatus {
         case .authorized:
-            print("Photo Authorization status is authorized.")
+            print("사진 접근 권한 인증 완료")
             self.requestAlbums(delegate : delegate)
             
         case .denied:
-            print("Photo Authorization status is denied.")
+            print("사진 접근 권한 거절")
             
         case .notDetermined:
-            print("Photo Authorization status is not determined.")
+            print("사진 접근 권한 미결정 상태")
             PHPhotoLibrary.requestAuthorization() {
                 (status) in
                 switch status {
                 case .authorized:
-                    print("User permiited.")
+                    print("허가")
                     self.requestAlbums(delegate : delegate)
                 case .denied:
-                    print("User denied.")
+                    print("거절")
                     break
                 default:
                     break
@@ -39,7 +39,7 @@ class AlbumDataManager : AlbumDataManagerDelegate {
             }
             
         case .restricted:
-            print("Photo Authorization status is restricted.")
+            print("거절")
         default:
             break
         }
@@ -50,16 +50,16 @@ class AlbumDataManager : AlbumDataManagerDelegate {
         var albums : [AlbumInfo] = []
         
         let cameraRoll: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .any, options: PHFetchOptions())
- 
-        for i in 0 ..< cameraRoll.count {
         
+        for i in 0 ..< cameraRoll.count {
+            
             let fetchOption = PHFetchOptions()
             fetchOption.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             
             let fetchResult = PHAsset.fetchAssets(in: cameraRoll[i], options: fetchOption)
             
             let album = AlbumInfo(title: cameraRoll[i].localizedTitle ?? "무제", count: fetchResult.count, thumnail: fetchResult.firstObject, images: fetchResult)
-
+            
             albums.append(album)
         }
         

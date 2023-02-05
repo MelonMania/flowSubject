@@ -64,9 +64,7 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
         
         let margin: CGFloat = 4
         let width: CGFloat = (collectionView.bounds.width - (2 * margin)) / 3
-        print("width : \(collectionView.bounds.width)")
         let height: CGFloat = width
-        print("height : \(height)")
         
         return CGSize(width: width, height: height)
     }

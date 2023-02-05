@@ -23,6 +23,7 @@
 		1787FB3F298E79F8009B97F6 /* PhotoListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1787FB3D298E79F8009B97F6 /* PhotoListViewController.xib */; };
 		17C7045B298E7F1000F15893 /* PhotoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C70459298E7F1000F15893 /* PhotoListCollectionViewCell.swift */; };
 		17C7045C298E7F1000F15893 /* PhotoListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17C7045A298E7F1000F15893 /* PhotoListCollectionViewCell.xib */; };
+		17C7045E298F798900F15893 /* AlbumProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C7045D298F798900F15893 /* AlbumProtocol.swift */; };
 		17DFE2E2298E3ACF009996CD /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DFE2E0298E3ACF009996CD /* AlbumsTableViewCell.swift */; };
 		17DFE2E3298E3ACF009996CD /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17DFE2E1298E3ACF009996CD /* AlbumsTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		1787FB3D298E79F8009B97F6 /* PhotoListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoListViewController.xib; sourceTree = "<group>"; };
 		17C70459298E7F1000F15893 /* PhotoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		17C7045A298E7F1000F15893 /* PhotoListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoListCollectionViewCell.xib; sourceTree = "<group>"; };
+		17C7045D298F798900F15893 /* AlbumProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumProtocol.swift; sourceTree = "<group>"; };
 		17DFE2E0298E3ACF009996CD /* AlbumsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewCell.swift; sourceTree = "<group>"; };
 		17DFE2E1298E3ACF009996CD /* AlbumsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumsTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				1771E122298E4911000833F2 /* AlbumDataManager.swift */,
+				17C7045D298F798900F15893 /* AlbumProtocol.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				170B2AF6298D537B0089DCF4 /* PhotoAlbum.xcdatamodeld in Sources */,
 				1771E121298E47A2000833F2 /* AlbumInfo.swift in Sources */,
 				1787FB3E298E79F8009B97F6 /* PhotoListViewController.swift in Sources */,
+				17C7045E298F798900F15893 /* AlbumProtocol.swift in Sources */,
 				17DFE2E2298E3ACF009996CD /* AlbumsTableViewCell.swift in Sources */,
 				170B2AEE298D537B0089DCF4 /* SceneDelegate.swift in Sources */,
 			);

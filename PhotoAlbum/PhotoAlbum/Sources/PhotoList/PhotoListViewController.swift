@@ -85,17 +85,22 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let asset = self.album?.images?.object(at: indexPath.row) {
             let resources = PHAssetResource.assetResources(for: asset)
-            let filename = resources.first!.originalFilename
-            var byte = ""
-            
+            let fileName = resources.first!.originalFilename
+            var fileSize = ""
             var sizeOnDisk: Int64 = 0
-                  if let resource = resources.first {
-                    let unsignedInt64 = resource.value(forKey: "fileSize") as? CLong
-                    sizeOnDisk = Int64(bitPattern: UInt64(unsignedInt64!))
-                      byte = String(format: "%.2f", Double(sizeOnDisk) / (1024.0*1024.0))+" MB"
-                  }
-          
-            let alert = UIAlertController(title: "사진정보", message: "파일명 : \(filename)\n파일크기 : \(byte)", preferredStyle: .alert)
+            
+            
+            if let resource = resources.first {
+                let unsignedInt64 = resource.value(forKey: "fileSize") as? CLong
+                let formatter : ByteCountFormatter = ByteCountFormatter()
+                
+                sizeOnDisk = Int64(bitPattern: UInt64(unsignedInt64!))
+                formatter.countStyle = .file
+                
+                fileSize = formatter.string(fromByteCount: Int64(sizeOnDisk))
+            }
+            
+            let alert = UIAlertController(title: "사진정보", message: "파일명 : \(fileName)\n파일크기 : \(fileSize)", preferredStyle: .alert)
             let action = UIAlertAction(title: "확인", style: .default, handler: nil)
             
             alert.addAction(action)
@@ -118,9 +123,3 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
     
 }
 
-func converByteToHumanReadable(_ bytes:Int64) -> String {
-     let formatter:ByteCountFormatter = ByteCountFormatter()
-     formatter.countStyle = .binary
-
-     return formatter.string(fromByteCount: Int64(bytes) / (1024 * 1024))
- }

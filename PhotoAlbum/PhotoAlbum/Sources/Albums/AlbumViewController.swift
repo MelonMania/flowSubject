@@ -12,6 +12,7 @@ class AlbumViewController: UIViewController {
 
     lazy var albumDataManager : AlbumDataManagerDelegate = AlbumDataManager()
     let imageManager : PHCachingImageManager = PHCachingImageManager() // asset으로부터 이미지를 가져오기 위한 객체
+    let targetSize = CGSize(width: 300, height: 300)
     
     var albums : [AlbumInfo] = [] // 디바이스 내부 전체 앨범들이 저장될 변수
     
@@ -50,9 +51,9 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
         
         if let thumbnail = albums[indexPath.row].thumnail {
             let options = PHImageRequestOptions()
-            options.deliveryMode = .opportunistic // 이미지 화질 개선
+            options.deliveryMode = .highQualityFormat // 이미지 화질 개선
             
-            imageManager.requestImage(for: thumbnail, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) { // PHAsset에서 이미지 가져오기
+            imageManager.requestImage(for: thumbnail, targetSize: self.targetSize, contentMode: .aspectFill, options: options) { // PHAsset에서 이미지 가져오기
                 image, _ in
                 cell.thumbnailImageView.image = image
             }

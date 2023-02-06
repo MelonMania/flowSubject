@@ -14,7 +14,13 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
        
-        
+    }
+    
+    // 셀 재사용을 위한 셀 초기화
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        self.photoImageView.image = nil
     }
 
 }

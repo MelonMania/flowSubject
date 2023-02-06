@@ -7,6 +7,12 @@
 - Xcode  // 14.2
 - Swift // 5.7.2
 
+## 📱 Test Device
+
+- iPhone XR (실기기)
+- iPhone 14 (실기기)
+- Simulator
+
 ## 📌 **Trouble Shooting**
 
 앨범 내부 이미지들을 볼 때 scroll을 매우 빠르게 하면 이미지가 깜박거리고 위치가 바뀜

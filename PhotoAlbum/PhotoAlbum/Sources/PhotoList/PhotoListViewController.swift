@@ -11,6 +11,8 @@ import Photos
 class PhotoListViewController: UIViewController {
     
     let imageManager : PHCachingImageManager = PHCachingImageManager() // asset으로부터 이미지를 가져오기 위한 객체
+    let targetSize = CGSize(width: 300, height: 300)
+    
     var album : AlbumInfo?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -35,7 +37,7 @@ class PhotoListViewController: UIViewController {
 extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if let value = album {
+        if let value = album?.images {
             return value.count
         } else {
             return 0
@@ -45,14 +47,14 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoListCollectionViewCell", for: indexPath) as? PhotoListCollectionViewCell else { return UICollectionViewCell() }
         
-        if let photo = album?.images?[indexPath.row] {
+        if let photo = self.album?.images?[indexPath.item] {
             let options = PHImageRequestOptions()
-            options.deliveryMode = .opportunistic // 이미지 화질 개선
+            options.deliveryMode = .highQualityFormat // 이미지 화질 개선
             
-            imageManager.requestImage(for: photo, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) { // 이미지 가져오기
+            imageManager.requestImage(for: photo, targetSize: self.targetSize, contentMode: .aspectFill, options: options, resultHandler: { // 이미지 가져오기
                 image, _ in
                 cell.photoImageView.image = image
-            }
+            })
         } else {
             cell.photoImageView.image = UIImage()
         }
@@ -66,6 +68,7 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
         let width: CGFloat = (collectionView.bounds.width - (2 * margin)) / 3
         let height: CGFloat = width
         // 한 줄당 3개의 이미지를 4씩 간격을 두고 나타내기 위함
+        
         return CGSize(width: width, height: height)
     }
     
@@ -114,6 +117,8 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
     func setCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.prefetchDataSource = self
+        
         collectionView.backgroundColor = .systemGray6
         
         // 앨범 셀
@@ -121,6 +126,30 @@ extension PhotoListViewController : UICollectionViewDelegate, UICollectionViewDa
         collectionView.register(photoCell, forCellWithReuseIdentifier: "PhotoListCollectionViewCell")
     }
     
+}
+
+//MARK: - UICollectionViewDataSourcePrefetching >> prefetch를 이용한 이미지 캐싱
+extension PhotoListViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat // 이미지 화질 개선
     
+        if let value = album?.images {
+            DispatchQueue.main.async {
+                self.imageManager.startCachingImages(for: indexPaths.map{ value.object(at: $0.item) }, targetSize: self.targetSize, contentMode: .aspectFill, options: options) // 이미지 캐싱
+            }
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat // 이미지 화질 개선
+        
+        if let value = album?.images {
+            DispatchQueue.main.async {
+                self.imageManager.stopCachingImages(for: indexPaths.map{ value.object(at: $0.item) }, targetSize: self.targetSize, contentMode: .aspectFill, options: options) // 캐시 해제
+            }
+        }
+    }
 }
 

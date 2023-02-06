@@ -19,6 +19,15 @@ class AlbumsTableViewCell: UITableViewCell {
         // Initialization code
     }
 
+    // 셀 재사용을 위한 셀 초기화
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        self.thumbnailImageView.image = nil
+        self.albumTitleLabel.text = nil
+        self.photoCountLabel.text = nil
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

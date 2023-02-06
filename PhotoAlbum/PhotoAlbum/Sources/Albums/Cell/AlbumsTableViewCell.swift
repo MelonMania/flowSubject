@@ -9,9 +9,9 @@ import UIKit
 
 class AlbumsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var thumbnailImageView: UIImageView!
-    @IBOutlet weak var albumTitleLabel: UILabel!
-    @IBOutlet weak var photoCountLabel: UILabel!
+    @IBOutlet weak var thumbnailImageView: UIImageView! // 앨범 썸네일 ImageView
+    @IBOutlet weak var albumTitleLabel: UILabel! // 앨범 제목 Label
+    @IBOutlet weak var photoCountLabel: UILabel! // 사진 갯수 Label
     
     
     override func awakeFromNib() {

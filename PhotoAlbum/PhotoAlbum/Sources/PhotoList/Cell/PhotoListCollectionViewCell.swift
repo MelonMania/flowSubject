@@ -9,7 +9,7 @@ import UIKit
 
 class PhotoListCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var photoImageView: UIImageView! 
     
     override func awakeFromNib() {
         super.awakeFromNib()

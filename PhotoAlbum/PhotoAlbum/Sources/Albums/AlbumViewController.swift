@@ -11,9 +11,9 @@ import Photos
 class AlbumViewController: UIViewController {
 
     lazy var albumDataManager : AlbumDataManagerDelegate = AlbumDataManager()
-    let imageManager : PHCachingImageManager = PHCachingImageManager()
+    let imageManager : PHCachingImageManager = PHCachingImageManager() // asset으로부터 이미지를 가져오기 위한 객체
     
-    var albums : [AlbumInfo] = []
+    var albums : [AlbumInfo] = [] // 디바이스 내부 전체 앨범들이 저장될 변수
     
     @IBOutlet weak var albumTableView: UITableView!
     
@@ -27,7 +27,7 @@ class AlbumViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.albumDataManager.checkPhotosPermission(delegate: self)
+        self.albumDataManager.checkPhotosPermission(delegate: self) // 권한 확인 후 권한 있으면 앨범들 가져오기
     }
     
     // 네비게이션 바 세팅
@@ -52,7 +52,7 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
             let options = PHImageRequestOptions()
             options.deliveryMode = .opportunistic // 이미지 화질 개선
             
-            imageManager.requestImage(for: thumbnail, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) {
+            imageManager.requestImage(for: thumbnail, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) { // PHAsset에서 이미지 가져오기
                 image, _ in
                 cell.thumbnailImageView.image = image
             }
@@ -85,6 +85,7 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
         return 85
     }
     
+    // 테이블 뷰 세팅
     func setTableView() {
         albumTableView.delegate = self
         albumTableView.dataSource = self
@@ -98,6 +99,7 @@ extension AlbumViewController : UITableViewDelegate, UITableViewDataSource {
 
 //MARK: - AlbumViewDelegate
 extension AlbumViewController : AlbumViewDelegate {
+    // 앨범들 가져오기
     func getAlbum(albums : [AlbumInfo]) {
         self.albums = albums
         

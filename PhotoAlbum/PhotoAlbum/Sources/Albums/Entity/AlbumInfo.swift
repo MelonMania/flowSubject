@@ -9,9 +9,9 @@ import UIKit
 import Photos
 
 struct AlbumInfo {
-    var title : String
-    var count: Int
+    var title : String // 앨범 제목
+    var count: Int // 앨범 내부 사진 갯수
     
-    var thumnail : PHAsset?
-    var images : PHFetchResult<PHAsset>?
+    var thumnail : PHAsset? // 앨범 썸네일
+    var images : PHFetchResult<PHAsset>? // 앨범 내부 사진들
 }
